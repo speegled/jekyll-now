@@ -21,7 +21,7 @@ library(ggplot2)
 
 I decided to push beyond what is being presented in the book. I decided I want to *color* the outliers according to the subject they represent, and provide a legend that says which color belongs to which subject. Basically, this:
 
-![](/figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](../figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 It seems to me that seeing at a glance which Subjects are the outliers, and that it is the same subject at each occasion, is information worth having. (OK, for this particular data set, it would be impossible for the outlier in occasions 4-10 to come from a different subject thant that in occasion 3, assuming that heights of the subjects were nondecreasing! But, in general, one would like to know whether it is the same subject, or different subjects at each occasion, right?) I guess one could argue that having the colored outliers distracts from what the main focus should be, which is how the rest of the data is behaving...
 
