@@ -56,17 +56,14 @@ upper.limit <- tapply(Oxboys$height, Oxboys$Occasion, function(x) 1.5*(quantile(
 lower.limit <- tapply(Oxboys$height, Oxboys$Occasion, function(x) -1.5*(quantile(x, .75) - quantile(x,.25)) + quantile(x,.25))
 ```
 
-Now, we need to find the heights that fall below those values for the corresponding Occasions, and color them according to their Subject. This is the kind of thing that I feel like should be easy. But, I don't see how to do it easily. The constraints that I am working with are:
+Now, we need to find the heights that fall below those values for the corresponding Occasions, and color them according to their Subject. This is the kind of thing that I feel like should be easy. But, I don't see how to do it super-easily. 
 
-1. I don't want to write an explicit loop.
-2. I want my solution to be generic, in the sense that it doesn't depend on the names of the Occasions or the subjects.
-
-One thing I have going for me is that I can pull out the names of the factors from lower.limit and upper.limit in the following way
+First, let's pull out the names of the factors from lower.limit and upper.limit in the following way
 ```{r}
 attr(lower.limit, which = "dimnames")
 ```
 
-This allows me to write the generic code below using indexing:
+This allows me to combine which with some indexing to create the data we need to add to the data frame.
 ```{r}
 N <- length(lower.limit)
 lower.limits <- rep(0,nrow(Oxboys))
@@ -81,7 +78,7 @@ Let's check:
 head(Oxboys)
 ```
 
-Hmmm, weird that the upper limit at Occasion two is less than that at Occasion one. So, a person could not be an outlier in this group for being tall at age 10, not grow at all, and be an outlier for being tall at age 11. I'm not sure what to make of that. I see why that's possible, but I'm not sure that it is desirable.
+Hmmm, weird that the upper limit at Occasion two is less than that at Occasion one. So, a person could not be an outlier in this group for being tall at age 10, not grow at all, and be an outlier for being tall at age 11. That means that the outlier identification procedure could be improved here, but I am going to forge on!
 
 Anywho. Now we are ready to do the graph:
 
@@ -98,5 +95,6 @@ ggplot() +  geom_boxplot(data = plot_Data, aes(x = Occasion, y = height)) +  geo
 
 My takeaways from this are:
 
-1. Modulo the cryptic and intimidating .(Occasion) argument, the solution using ddply is more readable and intuitive. Looks like I will need to add learning about the plyr package to my to-do list.
+1. Modulo the cryptic and intimidating .(Occasion) argument, the solution using ddply is more readable and intuitive. Looks like I may need to add learning about the plyr package to my to-do list.
 2. Labelling outliers in boxplots is hard in R. It is tricky to do in the base package using boxplot, and it is tricky to do using ggplot. I wonder why this is. Do other people think that labelling outliers isn't useful enough to make easy?
+
