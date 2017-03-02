@@ -1,7 +1,7 @@
 # Labelling outliers in boxplot over factors
 
 While reading ggplot2 (great book, by the way!), I came across a graph that looks like this:
-![](figure/unnamed-chunk-1-1.png)<!-- -->
+![](/figure/unnamed-chunk-1-1.png)<!-- -->
 
 The data is the measurement of the height of 26 boys at 9 different scaled times, which are called "Occasions". This boxplot is a nice illustration of how easily ggplot handles things like this, because the command used to make this boxplot is given simply by
 
