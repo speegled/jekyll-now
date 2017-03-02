@@ -1,7 +1,7 @@
 # Labelling outliers in boxplot over factors
 
 While reading ggplot2 (great book, by the way!), I came across a graph that looks like this:
-![](/figure/unnamed-chunk-1-1.png)<!-- -->
+![](/figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 
 The data is the measurement of the height of 26 boys at 9 different scaled times, which are called "Occasions". This boxplot is a nice illustration of how easily ggplot handles things like this, because the command used to make this boxplot is given simply by
 
@@ -21,7 +21,7 @@ library(ggplot2)
 
 I decided to push beyond what is being presented in the book. I decided I want to *color* the outliers according to the subject they represent, and provide a legend that says which color belongs to which subject. Basically, this:
 
-![](../figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](/figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 It seems to me that seeing at a glance which Subjects are the outliers, and that it is the same subject at each occasion, is information worth having. (OK, for this particular data set, it would be impossible for the outlier in occasions 4-10 to come from a different subject thant that in occasion 3, assuming that heights of the subjects were nondecreasing! But, in general, one would like to know whether it is the same subject, or different subjects at each occasion, right?) I guess one could argue that having the colored outliers distracts from what the main focus should be, which is how the rest of the data is behaving...
 
@@ -34,7 +34,7 @@ The basic idea used to create the plot was that we need to create a new data fra
 boxplot(Oxboys$height~Oxboys$Occasion)$stats
 ```
 
-![](2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](/figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 ```
 ##        [,1]  [,2]  [,3]   [,4]   [,5]   [,6]    [,7]   [,8]  [,9]
@@ -52,7 +52,7 @@ BUT, the whiskers are computed differently inside geom_boxplot than they are ins
 boxplot(Oxboys$height~Oxboys$Occasion)
 ```
 
-![](2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](/figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 This plot only has three outliers, whereas the one we are interested in has 8. I don't know how to use geom_boxplot to pull out the whiskers, but the documentation tells us that anything that falls more than 1.5 * IQR away from the 25th or 75th percentile is considered an outlier. So, that tells us how to compute our lower limits and our upper limits. 
 
@@ -111,7 +111,7 @@ Anywho. Now we are ready to do the graph:
 ggplot() +  geom_boxplot(data = Oxboys, aes(x = Occasion, y = height)) +  geom_point(data = Oxboys[Oxboys$height > Oxboys$upper.limit | Oxboys$height < Oxboys$lower.limit,], aes(x = Occasion,y = height, color = Subject))
 ```
 
-![](2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](/figure/2016-10-19-Labelling-Outliers_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 Let's compare what I did to the original solution on stack exchange (which was actually a solution to a slightly different problem, but certainly contained everything needed to write this solution):
 
